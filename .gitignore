@@ -1,0 +1,11 @@
+# .env file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Other sensitive credentials
+*.pem
+*.key
+secrets.json
