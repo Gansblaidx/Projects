@@ -1,11 +1,11 @@
 name: Deploy Node Service
 
 on:
+
   push:
-    branches:
-      - main
-  paths:
-      - nodejs-docker-deployment/**
+    branches: ["main"]
+    paths:
+      - 'nodejs-docker-deployment/**'
 
 jobs:
   deploy:
