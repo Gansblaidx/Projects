@@ -21,7 +21,7 @@ jobs:
           docker build -t nodejs-service .
 
       - name: Save image as tar
-        run: docker save nodejs-service | gzip > node-service.tar.gz
+        run: docker save nodejs-service | gzip > nodejs-service.tar.gz
 
       - name: Copy image to server
         uses: appleboy/scp-action@v0.1.7
@@ -39,7 +39,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker load < /home/ubuntu/node-service.tar.gz
+            docker load < /home/ubuntu/nodejs-service.tar.gz
             docker stop node-service || true
             docker rm node-service || true
             docker run -d --name nodejs-service -p 3000:3000 \
