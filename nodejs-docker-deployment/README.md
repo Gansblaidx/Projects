@@ -1,6 +1,6 @@
 # Node.js Docker Deploy to AWS
 
-A Simple DevOps project to practice containerization, remote deployment, and CI/CD with GitHub Actions.
+Simple DevOps project to practice containerization, remote deployment, and CI/CD with GitHub Actions.
 
 ## Project goal
 
