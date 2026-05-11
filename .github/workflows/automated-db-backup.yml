@@ -1,0 +1,33 @@
+name: MongoDB Backup
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Backup MongoDB and upload to S3
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
+            BACKUP_FILE="backup_${TIMESTAMP}.gz"
+
+            mongodump \
+              --uri="mongodb://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost:27017/${{ secrets.DB_NAME }}" \
+              --authenticationDatabase=admin \
+              --archive=/tmp/${BACKUP_FILE} \
+              --gzip
+
+            aws s3 cp /tmp/${BACKUP_FILE} s3://${{ secrets.S3_BUCKET }}/backups/${BACKUP_FILE}
+
+            rm /tmp/${BACKUP_FILE}
+
+            echo "Backup ${BACKUP_FILE} uploaded successfully."
