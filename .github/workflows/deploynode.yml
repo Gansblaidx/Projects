@@ -40,8 +40,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker load < /home/ubuntu/nodejs-service.tar.gz
-            docker stop node-service || true
-            docker rm node-service || true
+            docker stop nodejs-service || true
+            docker rm nodejs-service || true
             docker run -d --name nodejs-service -p 3000:3000 \
               -e SECRET_MESSAGE=${{ secrets.SECRET_MESSAGE }} \
               -e USERNAME=${{ secrets.APP_USERNAME }} \
