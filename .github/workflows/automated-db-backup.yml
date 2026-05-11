@@ -28,6 +28,4 @@ jobs:
 
             aws s3 cp /tmp/${BACKUP_FILE} s3://${{ secrets.S3_BUCKET }}/backups/${BACKUP_FILE}
 
-            rm /tmp/${BACKUP_FILE}
-
             echo "Backup ${BACKUP_FILE} uploaded successfully."
